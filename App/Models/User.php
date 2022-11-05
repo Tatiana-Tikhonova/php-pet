@@ -3,17 +3,12 @@
 namespace App\Models;
 
 use App\Db;
+use App\Models\Model;
 
-class User
+class User extends Model
 {
+    const TABLE = 'users';
+
     public string $email;
     public string $name;
-    public static function findAll()
-    {
-        $db = new Db();
-        return $db->getDataObj(
-            'SELECT * FROM users',
-            'App\Models\User'
-        );
-    }
 }
