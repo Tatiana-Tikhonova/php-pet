@@ -3,13 +3,14 @@
 namespace App;
 
 use PDO;
-use stdClass;
+use App\Models\Traits\Singleton;
 
 /**
  * @class Db
  */
 class Db
 {
+    use Singleton;
     protected $dbh;
 
     /**
@@ -25,22 +26,24 @@ class Db
     /**
      * @function connect
      *
-     * @param  mixed $sql
+     * @param  string $sql
+     * @param  array $params
      * @return bool
      */
-    public function connect($sql)
+    public function connect(string $sql, array $params = []): bool
     {
         $sth = $this->dbh->prepare($sql);
-        $res = $sth->execute();
+        $res = $sth->execute($params);
         return $res;
     }
     /**
      * @function query
      *
-     * @param  mixed $sql
+     * @param  string $sql
+     * @param  string $class
      * @return array
      */
-    public function getDataObj($sql, $class = 'stdClass')
+    public function getData(string $sql, string $class = 'stdClass'): array
     {
         $sth = $this->dbh->prepare($sql);
         $res = $sth->execute();
